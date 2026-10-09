@@ -1,4 +1,0 @@
-interface:
-  display_name: "Diary Coach"
-  short_description: "逐段批改英语日记，讲解语法与自然表达"
-  default_prompt: "Use $diary-coach to review my English diary paragraph by paragraph."

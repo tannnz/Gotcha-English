@@ -1,53 +1,33 @@
-# Keep all new files ignored until reviewed for inclusion.
+# Ignore new files until they are reviewed for inclusion.
 *
 
-# Development documentation
+# Reviewed directory traversal (contents remain ignored).
+!/.agents/
+!/.claude-plugin/
+!/.codex-plugin/
+!/docs/
+!/scripts/
+!/skills/
+!/tests/
+!/.agents/plugins/
+!/skills/diary-coach/
+!/skills/diary-coach/agents/
+!/skills/diary-coach/references/
+
+# Reviewed development and runtime files.
 !/.gitignore
 !/AGENTS.md
 !/README.md
-
-# Diary Coach source files
-!/.agents/
-/.agents/*
-!/.agents/skills/
-/.agents/skills/*
-!/.agents/skills/diary-coach/
-/.agents/skills/diary-coach/*
-!/.agents/skills/diary-coach/SKILL.md
-!/.agents/skills/diary-coach/agents/
-/.agents/skills/diary-coach/agents/*
-!/.agents/skills/diary-coach/agents/openai.yaml
-!/.agents/skills/diary-coach/references/
-/.agents/skills/diary-coach/references/*
-!/.agents/skills/diary-coach/references/output-template.md
-
-# Project marketplace (reviewed catalog only)
-!/.agents/plugins/
-/.agents/plugins/*
+!/plugin.json
+!/.codex-plugin/plugin.json
+!/.claude-plugin/plugin.json
+!/.claude-plugin/marketplace.json
 !/.agents/plugins/marketplace.json
-
-# Reviewed plugin package source
-!/plugins/
-/plugins/*
-!/plugins/gotcha-english/
-/plugins/gotcha-english/*
-!/plugins/gotcha-english/plugin.json
-!/plugins/gotcha-english/.codex-plugin/
-/plugins/gotcha-english/.codex-plugin/*
-!/plugins/gotcha-english/.codex-plugin/plugin.json
-!/plugins/gotcha-english/skills/
-/plugins/gotcha-english/skills/*
-!/plugins/gotcha-english/skills/diary-coach/
-/plugins/gotcha-english/skills/diary-coach/*
-!/plugins/gotcha-english/skills/diary-coach/SKILL.md
-!/plugins/gotcha-english/skills/diary-coach/agents/
-/plugins/gotcha-english/skills/diary-coach/agents/*
-!/plugins/gotcha-english/skills/diary-coach/agents/openai.yaml
-!/plugins/gotcha-english/skills/diary-coach/references/
-/plugins/gotcha-english/skills/diary-coach/references/*
-!/plugins/gotcha-english/skills/diary-coach/references/output-template.md
-
-# Reproducible packaging helper
-!/scripts/
-/scripts/*
+!/skills/diary-coach/SKILL.md
+!/skills/diary-coach/references/output-template.md
+!/skills/diary-coach/agents/openai.yaml
+!/docs/architecture.md
+!/docs/development.md
+!/docs/distribution.md
 !/scripts/package-plugin.py
+!/tests/test_package_plugin.py

@@ -4,7 +4,7 @@
   "plugins": [
     {
       "name": "gotcha-english",
-      "source": { "source": "local", "path": "./plugins/gotcha-english" },
+      "source": { "source": "local", "path": "./" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Education"
     }

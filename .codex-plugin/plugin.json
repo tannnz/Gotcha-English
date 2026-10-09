@@ -1,10 +1,11 @@
 {
   "name": "gotcha-english",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Review English diaries paragraph by paragraph, explain grammar and word usage, and preserve the writer’s meaning and voice.",
   "author": {
     "name": "GotchaEnglish"
   },
+  "repository": "https://github.com/tannnz/Gotcha-English",
   "skills": "./skills/",
   "interface": {
     "displayName": "GotchaEnglish",
