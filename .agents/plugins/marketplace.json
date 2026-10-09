@@ -1,0 +1,12 @@
+{
+  "name": "gotcha-english-local",
+  "interface": { "displayName": "GotchaEnglish 项目测试" },
+  "plugins": [
+    {
+      "name": "gotcha-english",
+      "source": { "source": "local", "path": "./plugins/gotcha-english" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Education"
+    }
+  ]
+}

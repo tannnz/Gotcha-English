@@ -1,0 +1,53 @@
+# Keep all new files ignored until reviewed for inclusion.
+*
+
+# Development documentation
+!/.gitignore
+!/AGENTS.md
+!/README.md
+
+# Diary Coach source files
+!/.agents/
+/.agents/*
+!/.agents/skills/
+/.agents/skills/*
+!/.agents/skills/diary-coach/
+/.agents/skills/diary-coach/*
+!/.agents/skills/diary-coach/SKILL.md
+!/.agents/skills/diary-coach/agents/
+/.agents/skills/diary-coach/agents/*
+!/.agents/skills/diary-coach/agents/openai.yaml
+!/.agents/skills/diary-coach/references/
+/.agents/skills/diary-coach/references/*
+!/.agents/skills/diary-coach/references/output-template.md
+
+# Project marketplace (reviewed catalog only)
+!/.agents/plugins/
+/.agents/plugins/*
+!/.agents/plugins/marketplace.json
+
+# Reviewed plugin package source
+!/plugins/
+/plugins/*
+!/plugins/gotcha-english/
+/plugins/gotcha-english/*
+!/plugins/gotcha-english/plugin.json
+!/plugins/gotcha-english/.codex-plugin/
+/plugins/gotcha-english/.codex-plugin/*
+!/plugins/gotcha-english/.codex-plugin/plugin.json
+!/plugins/gotcha-english/skills/
+/plugins/gotcha-english/skills/*
+!/plugins/gotcha-english/skills/diary-coach/
+/plugins/gotcha-english/skills/diary-coach/*
+!/plugins/gotcha-english/skills/diary-coach/SKILL.md
+!/plugins/gotcha-english/skills/diary-coach/agents/
+/plugins/gotcha-english/skills/diary-coach/agents/*
+!/plugins/gotcha-english/skills/diary-coach/agents/openai.yaml
+!/plugins/gotcha-english/skills/diary-coach/references/
+/plugins/gotcha-english/skills/diary-coach/references/*
+!/plugins/gotcha-english/skills/diary-coach/references/output-template.md
+
+# Reproducible packaging helper
+!/scripts/
+/scripts/*
+!/scripts/package-plugin.py

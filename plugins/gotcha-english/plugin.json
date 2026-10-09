@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gotcha-english",
+  "version": "0.1.0",
+  "description": "Review English diaries paragraph by paragraph, explain grammar and word usage, and preserve the writer’s meaning and voice.",
+  "author": {
+    "name": "GotchaEnglish"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GotchaEnglish",
+        "shortDescription": "逐段批改英语日记，讲解语法与自然表达",
+        "longDescription": "使用 Diary Coach 逐段批改英语日记，解释语法、词义和搭配问题，提供完整修改版，并保留原意、口语风格和个人表达。",
+        "developerName": "GotchaEnglish",
+        "category": "Education",
+        "defaultPrompt": "Use $diary-coach to review my English diary paragraph by paragraph."
+      }
+    }
+  }
+}
