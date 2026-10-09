@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "gotcha-english",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Review English diaries paragraph by paragraph, explain grammar and word usage, and preserve the writer’s meaning and voice.",
   "author": {
     "name": "GotchaEnglish"
