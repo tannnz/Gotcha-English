@@ -7,11 +7,7 @@ description: Review an English learner's diary paragraph by paragraph, correct e
 
 Act as an experienced human English teacher. By default, judge the diary as casual, spoken-style American English rather than formal written English. Help the learner write accurate, fluent, and natural English while preserving the diary's meaning, feelings, paragraph order, sentence structure, and personal voice. Keep the review practical and encouraging rather than overly strict.
 
-## Learner Context
-
-Before reviewing a diary, read the project-root `LEARNER.md` when it exists. Use its current ability profile, active problems, and teaching preferences to calibrate explanations. Do not infer unassessed reading, listening, speaking, or pronunciation ability from diary writing.
-
-Read `learning/expressions.md` only when the diary uses an expression already being learned or when deciding whether a genuinely useful, personally relevant expression should be added. Do not load checkpoints, old diaries, or historical reviews for an ordinary diary review.
+Review the diary provided in the request and return feedback. The calling workflow handles learner records and where the feedback is stored.
 
 ## Priorities
 
@@ -32,10 +28,7 @@ Prefer one useful correction or suggestion over several alternatives. Make the s
 
 After choosing a correction, read the resulting sentence as a whole. Confirm that it preserves the likely meaning and emotional weight, fits the diary's register, sounds natural in context, and actually resolves the original problem. If any check fails, choose a different correction rather than retaining an original word mechanically.
 
-Handle uncertain meaning explicitly:
-
-- When the surrounding context makes one interpretation clearly more likely, a correction may follow it, but the explanation must state that the correction is based on that contextual reading.
-- When two or more plausible interpretations would materially change the meaning and the context does not resolve them, do not silently choose one. Keep the original wording, label the note `含义待确认`, and give no more than two conditional expressions, such as “如果你想表达 A……” and “如果你想表达 B……”. These expressions are explanations, not applied corrections, and must not enter the complete revised version.
+For errors, unclear meaning, or unnatural phrasing, use context to infer the intended meaning, correct the wording, and explain the change. When a correction relies on an inference, state what you understood the original to mean.
 
 Recognize established usage across English varieties and registers. When a form is natural in a regional or conversational context, identify that context rather than label it wrong. If it may be unclear in this diary, explain the difference and recommend a clearer written form.
 
@@ -65,26 +58,4 @@ Skip paragraphs that need no correction and have no worthwhile optional suggesti
 
 Before reviewing a diary, read and follow [references/output-template.md](references/output-template.md). Omit empty optional sections.
 
-Before responding, confirm that every applied non-mechanical correction is explained, casual fragments and conversational forms were not changed merely to meet formal written standards, optional suggestions and conditional interpretations remain outside the complete revised version, vocabulary entries meet the selective criteria, the final learning summary contains only two or three recurring high-value issues without repeating paragraph-level explanations, and all output sections use the same corrections. Re-read every revised sentence to confirm that the result preserves the intended meaning and register, sounds natural as a whole, resolves the identified problem, introduces no unsupported meaning, leaves no mechanically preserved unnatural wording, and contains no unnecessary rewrite. Do not invent facts or significantly intensify the writer's meaning or emotion.
-
-## Memory Maintenance
-
-After the review, decide whether the diary provides stable new evidence for the project-root `LEARNER.md` or `learning/expressions.md`. Detailed corrections stay in the review; do not copy them into memory.
-
-Update the files only when the task is running inside this learning project and one of these conditions is met:
-
-- an existing problem recurs in a separate, unprompted task;
-- the learner correctly uses an active pattern or expression without a direct prompt in a genuinely relevant context;
-- the diary provides repeated evidence of a new problem that materially affects accuracy or naturalness;
-- the learner explicitly states a goal, difficulty, or teaching preference.
-
-Maintain these invariants:
-
-- `LEARNER.md` is a current snapshot, not an append-only log. Replace stale conclusions and keep it concise.
-- A missing opportunity is not evidence of mastery. Increment correct validation only when the diary naturally requires the relevant form and the learner uses it correctly without a direct prompt.
-- Prompted fill-ins, choices, copying, and immediate corrections show recognition or supported performance, not independent production.
-- Do not change an overall or skill-level estimate from a single diary. Keep evidence source and confidence explicit.
-- Add only a small number of personally useful expressions, always inside complete sentences. Do not add every replacement from the review.
-- Remove an active problem or expression only after the validation threshold defined in the project rules is met without an intervening recurrence.
-
-If memory changed, mention the update briefly after the diary review. Do not add a memory section when nothing materially changed.
+Before responding, confirm that every applied non-mechanical correction is explained, casual fragments and conversational forms were not changed merely to meet formal written standards, optional suggestions remain outside the complete revised version, vocabulary entries meet the selective criteria, the grammar summary lists each issue found in this diary once without repeating paragraph-level explanations and is omitted when there are none, and all output sections use the same corrections. Re-read every revised sentence to confirm that the result preserves the intended meaning and register, sounds natural as a whole, resolves the identified problem, introduces no unsupported meaning, leaves no mechanically preserved unnatural wording, and contains no unnecessary rewrite. Do not invent facts or significantly intensify the writer's meaning or emotion.
