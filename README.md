@@ -20,7 +20,7 @@ npx skills add tannnz/Gotcha-English --skill diary-coach
 
 Skill 地址：[skills/diary-coach](https://github.com/tannnz/Gotcha-English/tree/main/skills/diary-coach)。需要获取整个目录，包括输出模板与其他支持文件，不能只下载 `SKILL.md`。
 
-当前仓库为私有仓库，读取和安装需要相应访问权限。上述入口不代表任意第三方都能读取，也不代表所有 Agent 均已验证兼容。
+当前仓库为公开仓库，可直接读取上述 Skill 地址。具体安装方式取决于所用 Agent 或安装器，不代表所有 Agent 均已验证兼容。
 
 ## 本地插件安装
 
