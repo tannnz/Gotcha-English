@@ -18,6 +18,7 @@
 !/.gitignore
 !/AGENTS.md
 !/README.md
+!/LICENSE
 !/plugin.json
 !/.codex-plugin/plugin.json
 !/.claude-plugin/plugin.json

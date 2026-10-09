@@ -109,7 +109,9 @@ def check(root):
             raise ValidationError(f'{relative}: generated metadata is stale; run --sync-metadata')
     check_catalog(root, '.agents/plugins/marketplace.json', value['name'], True)
     check_catalog(root, '.claude-plugin/marketplace.json', value['name'], False)
-    resources = ['plugin.json', '.codex-plugin/plugin.json', '.claude-plugin/plugin.json']
+    if not (root / 'LICENSE').is_file():
+        raise ValidationError('LICENSE: missing license file')
+    resources = ['LICENSE', 'plugin.json', '.codex-plugin/plugin.json', '.claude-plugin/plugin.json']
     skills = root / 'skills'
     discovered = []
     for directory in sorted(skills.iterdir() if skills.is_dir() else []):

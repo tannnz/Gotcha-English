@@ -42,3 +42,7 @@ Claude Code 使用仓库绝对路径：
 - [开发流程](docs/development.md)：Skill 修改、检查和本地安装更新。
 - [分发流程](docs/distribution.md)：版本、ZIP、GitHub Release 和市场分发。
 - [开发规则](AGENTS.md)：仓库工作规则。
+
+## 许可
+
+本项目采用 [MIT License](LICENSE)，允许使用、修改、再分发和商业使用，需保留版权声明和许可声明。

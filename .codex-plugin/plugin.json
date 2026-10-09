@@ -6,6 +6,7 @@
     "name": "GotchaEnglish"
   },
   "repository": "https://github.com/tannnz/Gotcha-English",
+  "license": "MIT",
   "skills": "./skills/",
   "interface": {
     "displayName": "GotchaEnglish",

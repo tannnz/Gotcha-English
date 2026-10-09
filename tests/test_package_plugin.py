@@ -18,8 +18,9 @@ class PackagingTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         subprocess.run(['git', 'init', '-q', str(self.root)], check=True)
-        self.write('.gitignore', '*\n!/.gitignore\n!/plugin.json\n!/.codex-plugin/\n!/.codex-plugin/plugin.json\n!/.claude-plugin/\n!/.claude-plugin/plugin.json\n!/skills/\n!/skills/**/\n!/skills/**/SKILL.md\n!/skills/**/template.md\n!/assets/\n!/assets/logo.svg\n')
-        self.manifest = {'name': 'gotcha-english', 'version': '0.1.1', 'description': 'Fictional test plugin', 'author': {'name': 'Test'}, 'extensions': {'com.openai': {'interface': {'displayName': 'Test'}}}}
+        self.write('.gitignore', '*\n!/.gitignore\n!/LICENSE\n!/plugin.json\n!/.codex-plugin/\n!/.codex-plugin/plugin.json\n!/.claude-plugin/\n!/.claude-plugin/plugin.json\n!/skills/\n!/skills/**/\n!/skills/**/SKILL.md\n!/skills/**/template.md\n!/assets/\n!/assets/logo.svg\n')
+        self.manifest = {'name': 'gotcha-english', 'version': '0.1.1', 'description': 'Fictional test plugin', 'author': {'name': 'Test'}, 'license': 'MIT', 'extensions': {'com.openai': {'interface': {'displayName': 'Test'}}}}
+        self.write('LICENSE', 'Fictional license for packaging tests.\n')
         self.save_manifest()
         self.write('.agents/plugins/marketplace.json', json.dumps({'name': 'gotcha-english-local', 'plugins': [{'name': 'gotcha-english', 'source': {'source': 'local', 'path': './'}}]}))
         self.write('.claude-plugin/marketplace.json', json.dumps({'name': 'gotcha-english-local', 'plugins': [{'name': 'gotcha-english', 'source': './'}]}))
@@ -44,6 +45,8 @@ class PackagingTests(unittest.TestCase):
         _, files = packaging.check(self.root)
         self.assertIn('skills/second-coach/SKILL.md', files)
         claude = packaging.read_json(self.root / '.claude-plugin/plugin.json')
+        self.assertEqual(claude['license'], 'MIT')
+        self.assertEqual(packaging.read_json(self.root / '.codex-plugin/plugin.json')['license'], 'MIT')
         self.assertNotIn('extensions', claude)
         self.assertNotIn('interface', claude)
         self.assertEqual(packaging.read_json(self.root / '.codex-plugin/plugin.json')['skills'], './skills/')
@@ -57,6 +60,7 @@ class PackagingTests(unittest.TestCase):
             self.assertEqual((self.root / relative).read_bytes(), content)
         with zipfile.ZipFile(first) as package:
             self.assertIsNone(package.testzip())
+            self.assertEqual(package.read('gotcha-english/LICENSE'), (self.root / 'LICENSE').read_bytes())
             self.assertTrue(all(name.startswith('gotcha-english/') for name in package.namelist()))
             self.assertFalse(any('marketplace' in name for name in package.namelist()))
 
@@ -64,6 +68,11 @@ class PackagingTests(unittest.TestCase):
         before = sorted(str(p.relative_to(self.root)) for p in self.root.rglob('*'))
         packaging.check(self.root)
         self.assertEqual(before, sorted(str(p.relative_to(self.root)) for p in self.root.rglob('*')))
+
+    def test_missing_license_fails(self):
+        (self.root / 'LICENSE').unlink()
+        with self.assertRaisesRegex(packaging.ValidationError, 'missing license file'):
+            packaging.check(self.root)
 
     def test_missing_reference(self):
         (self.root / 'skills/fictional-coach/references/template.md').unlink()
