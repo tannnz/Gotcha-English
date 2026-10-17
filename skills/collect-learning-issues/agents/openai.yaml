@@ -1,0 +1,4 @@
+interface:
+  display_name: "Collect Learning Issues"
+  short_description: "收录指定范围的英语学习问题到 Notion，归并跨对话证据并避免重复计数"
+  default_prompt: "Use $collect-learning-issues to collect supported English-learning problems from my specified conversations and time window into my existing Notion learning database."

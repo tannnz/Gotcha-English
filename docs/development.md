@@ -6,6 +6,8 @@
 
 新增文件需是通用内容，并逐项审核后加入 `.gitignore` 放行规则。不要提交个人学习材料。元数据修改只编辑根目录 `plugin.json`；平台文件的生成关系见[架构](architecture.md)。
 
+学习记录格式的唯一维护源是 `skills/setup-learning-space/references/record-format.md`。修改字段、正文或证据规则时先改这里，再执行 `python3 scripts/package-plugin.py --sync-record-format`；收录 Skill 中的同名文件是生成副本。检查会拒绝不同步的副本。文档中的格式版本覆盖字段和正文，格式不兼容的修改需要同步更新支持规则和维护方案，不能只升级插件版本。
+
 元数据变更后，先运行 `python3 scripts/package-plugin.py --sync-metadata` 同步生成文件。内容、元数据或工具修改后运行：
 
 ```sh
@@ -17,9 +19,11 @@ git status --short
 
 仅修改文档时，运行 `git diff --check` 并检查文件差异与工作区状态。
 
-`--check` 检查元数据同步、市场路径、Skill 格式和资源引用；无参数运行会生成 ZIP，见[分发流程](distribution.md)。
+`--check` 检查元数据和共用格式同步、市场路径、Skill 格式和资源引用；无参数运行会生成 ZIP，见[分发流程](distribution.md)。
 
 使用虚构材料检查修改后的 Skill 行为、引用资源和输出是否符合该 Skill 的规则。测试材料应放在测试创建的临时目录中，不作为正式功能提交。
+
+修改收录行为后，用虚构对话检查收录判断、新旧问题归并、跨对话重复材料、计数与日期、状态变化及检索缺口。打包测试只验证资源和生成关系；没有实际宿主和数据库验证时应注明这一限制。
 
 ## 本地 Codex 安装与更新
 

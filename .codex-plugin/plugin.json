@@ -1,7 +1,7 @@
 {
   "name": "gotcha-english",
   "version": "1.0.0",
-  "description": "Support English learning with independently usable skills. Currently includes Diary Coach for English diary feedback.",
+  "description": "Support English learning with independent skills for diary feedback, Notion learning-space setup, and evidence-based learning-issue collection.",
   "author": {
     "name": "GotchaEnglish"
   },
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "GotchaEnglish",
     "shortDescription": "通过不同 Skills 辅助英语学习",
-    "longDescription": "Gotcha English 提供可独立使用的英语 Skills。目前包含 Diary Coach：逐段批改英语日记，解释修改并保留原意与表达风格。后续将逐步增加其他英语学习能力。",
+    "longDescription": "Gotcha English 提供可独立使用的英语 Skills。Diary Coach 逐段批改英语日记，解释修改并保留原意与表达风格。Setup Learning Space 通过已连接的 Notion 工具建立学习空间，或为已有问题库补充缺少的字段。Collect Learning Issues 从指定范围的英语对话收录学习问题，归并来源证据、检查重复并保留原有内容。",
     "developerName": "GotchaEnglish",
     "category": "Education",
     "defaultPrompt": "Use $diary-coach to review my English diary paragraph by paragraph."

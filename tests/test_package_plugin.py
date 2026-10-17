@@ -197,6 +197,64 @@ class PackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(packaging.ValidationError, 'escapes repository'):
             packaging.check(self.root)
 
+    def shared_format(self):
+        self.skill('setup-learning-space')
+        self.skill('collect-learning-issues')
+        with (self.root / '.gitignore').open('a') as target:
+            target.write('!/skills/**/record-format.md\n')
+        self.write('skills/setup-learning-space/references/record-format.md', 'Fictional shared format.\n')
+
+    def test_shared_format_is_synced_and_both_copies_ship(self):
+        self.shared_format()
+        packaging.sync_record_format(self.root)
+        _, files = packaging.check(self.root)
+        for name in packaging.RECORD_FORMAT_FILES:
+            source = self.root / 'skills/setup-learning-space/references' / name
+            relative = f'skills/collect-learning-issues/references/{name}'
+            self.assertEqual(source.read_bytes(), (self.root / relative).read_bytes())
+            self.assertIn(relative, files)
+
+    def test_shared_format_drift_is_rejected_without_mutation(self):
+        self.shared_format()
+        packaging.sync_record_format(self.root)
+        destination = self.root / 'skills/collect-learning-issues/references/record-format.md'
+        self.write('skills/setup-learning-space/references/record-format.md', 'Updated fictional format.\n')
+        before = destination.read_bytes()
+        with self.assertRaisesRegex(packaging.ValidationError, 'sync-record-format'):
+            packaging.check(self.root)
+        self.assertEqual(destination.read_bytes(), before)
+        packaging.sync_record_format(self.root)
+        packaging.check(self.root)
+
+    def test_missing_shared_source_is_not_reconstructed_from_copy(self):
+        self.shared_format()
+        packaging.sync_record_format(self.root)
+        (self.root / 'skills/setup-learning-space/references/record-format.md').unlink()
+        with self.assertRaisesRegex(packaging.ValidationError, 'missing shared record format source'):
+            packaging.sync_record_format(self.root)
+
+    def test_shared_sync_rejects_destination_symlink(self):
+        self.shared_format()
+        packaging.sync_record_format(self.root)
+        target = self.root / 'skills/collect-learning-issues/references/record-format.md'
+        target.unlink()
+        target.symlink_to(self.root / 'plugin.json')
+        before = (self.root / 'plugin.json').read_bytes()
+        with self.assertRaisesRegex(packaging.ValidationError, 'symlink'):
+            packaging.sync_record_format(self.root)
+        self.assertEqual((self.root / 'plugin.json').read_bytes(), before)
+
+    def test_shared_format_copy_must_be_allowlisted(self):
+        self.shared_format()
+        packaging.sync_record_format(self.root)
+        with (self.root / '.gitignore').open('a') as target:
+            target.write('/skills/collect-learning-issues/references/record-format.md\n')
+        with (self.root / 'skills/collect-learning-issues/SKILL.md').open('a') as target:
+            target.write('\n[format](references/record-format.md)\n')
+        with self.assertRaisesRegex(packaging.ValidationError, 'excluded referenced resource'):
+            packaging.check(self.root)
+
+
 
 if __name__ == '__main__':
     unittest.main()

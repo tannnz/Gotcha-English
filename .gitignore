@@ -13,6 +13,12 @@
 !/skills/diary-coach/
 !/skills/diary-coach/agents/
 !/skills/diary-coach/references/
+!/skills/setup-learning-space/
+!/skills/setup-learning-space/agents/
+!/skills/setup-learning-space/references/
+!/skills/collect-learning-issues/
+!/skills/collect-learning-issues/agents/
+!/skills/collect-learning-issues/references/
 
 # Reviewed development and runtime files.
 !/.gitignore
@@ -27,8 +33,18 @@
 !/skills/diary-coach/SKILL.md
 !/skills/diary-coach/references/output-template.md
 !/skills/diary-coach/agents/openai.yaml
+!/skills/setup-learning-space/SKILL.md
+!/skills/setup-learning-space/references/notion-space.md
+!/skills/setup-learning-space/references/add-missing-fields.md
+!/skills/setup-learning-space/references/record-format.md
+!/skills/setup-learning-space/agents/openai.yaml
+!/skills/collect-learning-issues/SKILL.md
+!/skills/collect-learning-issues/agents/openai.yaml
+!/skills/collect-learning-issues/references/record-format.md
 !/docs/architecture.md
 !/docs/development.md
 !/docs/distribution.md
+!/docs/research/
+!/docs/research/english-language-skills-2026-10-14.md
 !/scripts/package-plugin.py
 !/tests/test_package_plugin.py

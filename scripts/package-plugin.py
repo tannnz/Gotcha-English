@@ -12,6 +12,47 @@ class ValidationError(ValueError):
     pass
 
 
+RECORD_FORMAT_FILES = ('record-format.md',)
+
+
+def shared_record_resources(root):
+    """Each independently installable Skill carries a verified copy of the format."""
+    root = root.resolve()
+    collector = root / 'skills/collect-learning-issues'
+    if not collector.exists():
+        return []
+    pairs = []
+    for filename in RECORD_FORMAT_FILES:
+        source = root / 'skills/setup-learning-space/references' / filename
+        destination = collector / 'references' / filename
+        for path in (source, destination):
+            current = root
+            for part in path.relative_to(root).parts:
+                current = current / part
+                if current.is_symlink():
+                    raise ValidationError(f'{current.relative_to(root)}: symlinks are not permitted')
+        if not source.is_file():
+            raise ValidationError(f'{source.relative_to(root)}: missing shared record format source')
+        if destination.exists() and not destination.is_file():
+            raise ValidationError(f'{destination.relative_to(root)}: expected a generated file')
+        pairs.append((source, destination))
+    return pairs
+
+
+def sync_record_format(root):
+    # Validate all paths and load all sources before writing any generated copy.
+    pending = [(destination, source.read_bytes()) for source, destination in shared_record_resources(root)]
+    for destination, content in pending:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(content)
+
+
+def check_record_format(root):
+    for source, destination in shared_record_resources(root):
+        if not destination.is_file() or destination.read_bytes() != source.read_bytes():
+            raise ValidationError(f'{destination.relative_to(root)}: shared record format is stale; run --sync-record-format')
+
+
 def read_json(path):
     try:
         value = json.loads(path.read_text(encoding='utf-8'))
@@ -104,6 +145,7 @@ def check_catalog(root, relative, name, codex):
 def check(root):
     root = root.resolve()
     value = metadata(root)
+    check_record_format(root)
     for relative, expected in overlays(value).items():
         if read_json(root / relative) != expected:
             raise ValidationError(f'{relative}: generated metadata is stale; run --sync-metadata')
@@ -210,11 +252,15 @@ def main():
     actions = parser.add_mutually_exclusive_group()
     actions.add_argument('--check', action='store_true')
     actions.add_argument('--sync-metadata', action='store_true')
+    actions.add_argument('--sync-record-format', action='store_true')
     args = parser.parse_args()
     try:
         if args.sync_metadata:
             sync_metadata(args.root)
             print('Platform metadata synchronized.')
+        elif args.sync_record_format:
+            sync_record_format(args.root)
+            print('Shared record format synchronized.')
         elif args.check:
             value, resources = check(args.root)
             print(f"Validated {value['name']} {value['version']}: {len(resources)} package files.")

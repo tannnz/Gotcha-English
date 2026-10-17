@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Learning Space"
+  short_description: "在 Notion 建立学习空间，或为已有问题库补充缺少的字段并保留原数据"
+  default_prompt: "Use $setup-learning-space to create a new English-learning space in Notion with an empty problem database and a learner profile."
