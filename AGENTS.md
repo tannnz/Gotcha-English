@@ -8,9 +8,7 @@
 - Skills 在 `skills/` 中维护；插件元数据在根 `plugin.json` 中维护，生成文件不手改。
 - 不保存私人学习资料、凭据或私人配置；验证使用虚构材料。
 - 新增文件审核后显式加入 `.gitignore` 的放行清单。
-- 修改前按任务读取对应维护文档，完成后执行相关检查并核对差异与工作区状态。
-
-## workflow
+- 本地插件市场 gotcha-english-local 已配置并指向本项目。
 
 
 ## 文档目录
@@ -19,3 +17,9 @@
 - [目录与内容来源](docs/architecture.md)
 - [开发、验证与本地更新](docs/development.md)
 - [版本与分发](docs/distribution.md)
+
+
+## workflow
+
+- 按照项目结构，在对应目录创建 Skills
+- 用户要求发布新版本时，按[发布流程](docs/release.md)执行。

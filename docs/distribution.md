@@ -1,21 +1,9 @@
 # 分发流程
 
-## 版本与发布包
+本机开发、通过 GitHub 仓库市场安装插件、独立安装 Skill 均不需要 ZIP。安装方式见 [README](../README.md#安装插件)，本地验证见[开发流程](development.md#本地-codex-安装与更新)。各安装方式使用同一份 Skills 和插件元数据。
 
-版本只在根目录 `plugin.json` 中维护。准备发布时更新版本，按[开发流程](development.md#修改或新增-skill)同步平台说明并完成检查。市场标识和插件标识保持稳定。
+正式发布新版本时，按[发布流程](release.md)更新版本、推送代码和标签、创建 GitHub Release，并上传对应 ZIP。仅推送代码不等于发布新版本。
 
-审查源文件和生成文件的差异。然后生成 ZIP：
+需要单独导出 ZIP 时，完成项目检查后运行 `python3 scripts/package-plugin.py`。产物保存在忽略提交的 `dist/` 中，不改写插件内容。
 
-```sh
-python3 scripts/package-plugin.py
-```
-
-脚本在忽略提交的 `dist/` 中生成发布包，不改写源文件。ZIP 使用单一顶层插件目录，包含 `LICENSE`、运行所需的插件说明、Skills 和支持资源。发布前检查文件清单及资源引用。
-
-## GitHub Release 与市场分发
-
-推送和发布按用户明确指示执行。GitHub SSH 使用 `github-codex` Host alias，默认分支为 `main`。提交时只包含审核过的本次发布文件。
-
-GitHub Release 的标签对应发布提交，并上传同版本的 ZIP。独立 Skill 安装使用完整 Skill 目录；Git 市场由客户端配置仓库来源后读取。本地市场读取仓库根目录，不读取 ZIP，更新方式见[开发流程](development.md)。
-
-官方市场分发按目标市场的提交要求单独处理；仓库或 Release 可访问不代表市场已收录。
+GitHub 分发与官方插件目录提交分别处理。当前[官方提交流程](https://developers.openai.com/plugins/deploy/submission)要求上传 ZIP；GitHub 仓库或 Release 可访问，不代表已被官方目录收录。

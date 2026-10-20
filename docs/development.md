@@ -19,7 +19,7 @@ git status --short
 
 仅修改文档时，运行 `git diff --check` 并检查文件差异与工作区状态。
 
-`--check` 检查元数据和共用格式同步、市场路径、Skill 格式和资源引用；无参数运行会生成 ZIP，见[分发流程](distribution.md)。
+`--check` 检查元数据和共用格式同步、市场路径、Skill 格式和资源引用，不生成 ZIP。本机开发验证不需要 ZIP；仅在需要导出时按[分发流程](distribution.md)生成。
 
 使用虚构材料检查修改后的 Skill 行为、引用资源和输出是否符合该 Skill 的规则。测试材料应放在测试创建的临时目录中，不作为正式功能提交。
 
@@ -27,22 +27,18 @@ git status --short
 
 ## 本地 Codex 安装与更新
 
-检查当前安装和市场：
+本机开发通过 `gotcha-english-local` 市场读取项目目录并安装。只维护 `skills/` 和根 `plugin.json` 中的源内容，不另建开发版或使用 ZIP。
 
-```sh
-codex plugin marketplace list
-codex plugin list
-```
+首次安装见 [README](../README.md#本机开发安装)。已有本地开发入口时沿用现有配置，不重复注册同名 GitHub 市场。
 
-首次安装见 [README](../README.md#本地安装插件)。更新前记录当前安装来源与版本，以便需要时恢复。
+日常开发按以下步骤验证：
 
-修改源文件后，按客户端支持的流程更新安装。若缓存未更新，移除并重新安装：
+1. 修改市场指向的项目目录，完成上面的项目检查。
+2. 重启 ChatGPT，加载插件改动。
+3. 在新聊天中选择受影响的 Skill，用虚构材料验证调用和输出。
 
-```sh
-codex plugin remove gotcha-english@gotcha-english-local
-codex plugin add gotcha-english@gotcha-english-local
-```
+本地目录更新和重启方式见[官方说明](https://developers.openai.com/plugins/build/plugins#install-a-local-plugin-manually)，新聊天验证见[完整插件测试](https://developers.openai.com/plugins/deploy/connect-chatgpt#test-the-complete-plugin)。
 
-更新后比较客户端缓存与项目中的插件版本、`SKILL.md` 和支持资源；只读取缓存，不直接编辑。在新聊天中明确选择已安装插件的 Skill，用虚构材料验证调用。若客户端未显示更新，刷新或重启客户端后再次核对来源。
+仅在改动未生效时排查市场来源、安装状态和客户端日志，必要时按客户端支持的方式重新安装。缓存比对属于排障步骤，不作为每次开发的固定要求；只读取缓存，不直接编辑。
 
 分别记录结构检查、安装和调用结果，未完成的项目标为待验证。Claude Code 结构检查使用可用的官方插件验证器；实际调用结果需单独验证。

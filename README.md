@@ -28,16 +28,33 @@ npx skills add tannnz/Gotcha-English --skill diary-coach
 Use $collect-learning-issues to collect English-learning problems from this project's conversations during the last seven days into the Notion database I specified. Use Asia/Shanghai for the time window and memory only to locate original conversations.
 ```
 
-安装时需包含 Skill 目录中的模板和支持文件。具体安装方式取决于所用 Agent 或安装器。
+安装时需包含 Skill 目录中的模板和支持文件，不需要 ZIP。具体安装方式取决于所用 Agent 或安装器。
 
-## 本地安装插件
+## 安装插件
 
-在仓库根目录执行 Codex 命令：
+插件和独立 Skill 都使用仓库中的同一份 `skills/` 内容。以下两种插件安装方式都不需要 ZIP。
+
+### 从 GitHub 安装
+
+未注册本地开发源的用户，可在 Codex 中注册此仓库提供的市场，再安装插件：
+
+```sh
+codex plugin marketplace add tannnz/Gotcha-English
+codex plugin add gotcha-english@gotcha-english-local
+```
+
+市场名称 `gotcha-english-local` 来自仓库的市场目录文件；名称中的 `local` 不表示必须先手动下载仓库。CLI 不支持安装时，在桌面客户端的插件目录选择该市场并安装。GitHub 仓库安装是官方支持的市场来源，见[官方说明](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
+
+### 本机开发安装
+
+开发时使用本地项目目录。在仓库根目录执行：
 
 ```sh
 codex plugin marketplace add "$PWD"
 codex plugin add gotcha-english@gotcha-english-local
 ```
+
+已注册该本地市场时沿用现有配置，不要再添加同名 GitHub 来源。修改项目内容后，按[开发流程](docs/development.md#本地-codex-安装与更新)重启 ChatGPT，并在新聊天中验证。
 
 Claude Code 使用仓库绝对路径：
 
@@ -46,13 +63,11 @@ Claude Code 使用仓库绝对路径：
 /plugin install gotcha-english@gotcha-english-local
 ```
 
-本地安装后的更新方式见[开发流程](docs/development.md)。
-
 ## 文档
 
 - [架构](docs/architecture.md)：目录职责与源文件关系。
 - [开发流程](docs/development.md)：Skill 修改、检查和本地安装更新。
-- [分发流程](docs/distribution.md)：版本、ZIP、GitHub Release 和市场分发。
+- [分发流程](docs/distribution.md)：版本、GitHub 分发和按需生成 ZIP。
 - [开发规则](AGENTS.md)：仓库工作规则。
 
 ## 许可
