@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "gotcha-english",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Support English learning with independent skills for diary feedback, Notion learning-space setup, and evidence-based learning-issue collection.",
   "author": {

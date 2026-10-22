@@ -1,0 +1,4 @@
+interface:
+  display_name: "Echo Method"
+  short_description: "回声法句型练习、替换训练、影子练习与情境应用"
+  default_prompt: "Use $echo-method 开始回声法。"

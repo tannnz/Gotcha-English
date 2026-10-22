@@ -49,3 +49,9 @@
 !/docs/research/english-language-skills-2026-10-14.md
 !/scripts/package-plugin.py
 !/tests/test_package_plugin.py
+
+# Reviewed Echo Method skill.
+!/skills/echo-method/
+!/skills/echo-method/agents/
+!/skills/echo-method/SKILL.md
+!/skills/echo-method/agents/openai.yaml
