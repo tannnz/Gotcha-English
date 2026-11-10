@@ -1,17 +1,24 @@
 # 开发流程
 
+## 新增仓库文件
+
+逐项审核新增文件，确认适合纳入仓库后，将对应路径显式加入 `.gitignore` 的放行规则。
+
 ## 修改或新增 Skill
 
 修改前阅读相关 Skill 正文和它引用的模板、支持资源。直接编辑 `skills/` 中的源文件；新增 Skill 放入 `skills/<name>/SKILL.md`，在文件头部填写与目录名一致的 `name` 和单行 `description`。Skill 名称使用小写字母、数字和连字符；支持资源放在该 Skill 目录内，通过相对路径引用。
 
-新增文件需是通用内容，并逐项审核后加入 `.gitignore` 放行规则。不要提交个人学习材料。元数据修改只编辑根目录 `plugin.json`；平台文件的生成关系见[架构](architecture.md)。
-
 学习记录格式的唯一维护源是 `skills/setup-learning-space/references/record-format.md`。修改字段、正文或证据规则时先改这里，再执行 `python3 scripts/package-plugin.py --sync-record-format`；收录 Skill 中的同名文件是生成副本。检查会拒绝不同步的副本。文档中的格式版本覆盖字段和正文，格式不兼容的修改需要同步更新支持规则和维护方案，不能只升级插件版本。
 
-元数据变更后，先运行 `python3 scripts/package-plugin.py --sync-metadata` 同步生成文件。内容、元数据或工具修改后运行：
+## 修改插件元数据
+
+修改插件元数据时，按[架构](architecture.md)找到维护源，编辑后运行 `python3 scripts/package-plugin.py --sync-metadata` 同步生成文件。
+
+## 验证改动
+
+内容、元数据或工具修改后，先运行[插件结构检查](../AGENTS.md#插件命令)，再运行：
 
 ```sh
-python3 scripts/package-plugin.py --check
 python3 -m unittest discover -s tests
 git diff --check
 git status --short
