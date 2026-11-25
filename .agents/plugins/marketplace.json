@@ -1,9 +1,9 @@
 {
-  "name": "gotcha-english-stable",
-  "interface": { "displayName": "GotchaEnglish Stable" },
+  "name": "gotcha-english-beta",
+  "interface": { "displayName": "GotchaEnglish Beta" },
   "plugins": [
     {
-      "name": "gotcha-english",
+      "name": "gotcha-english-beta",
       "source": { "source": "local", "path": "./" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Education"

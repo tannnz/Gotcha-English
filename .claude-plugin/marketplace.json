@@ -1,12 +1,12 @@
 {
-  "name": "gotcha-english-local",
+  "name": "gotcha-english-beta",
   "description": "English learning skills from Gotcha English.",
   "owner": {
     "name": "GotchaEnglish"
   },
   "plugins": [
     {
-      "name": "gotcha-english",
+      "name": "gotcha-english-beta",
       "source": "./"
     }
   ]
