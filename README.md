@@ -33,9 +33,30 @@ Use $collect-learning-issues to collect English-learning problems from this proj
 
 ## 在 Codex 安装和更新插件
 
-两个版本都从 GitHub 安装。日常学习使用正式版（Stable），验证新功能使用测试版（Beta）。
+在 Codex 桌面端打开「添加插件市场」。日常学习选正式版，试用新功能选测试版。任选一个版本，按下面的内容填表。
 
 ### 正式版
+
+- 「来源」填 `tannnz/Gotcha-English`。
+- 「Git 引用」填 `main`。
+- 「稀疏路径」留空。
+
+点击「添加市场」，然后在插件列表找到 **GotchaEnglish Stable**，点击「安装」。
+
+### 测试版
+
+- 「来源」填 `tannnz/Gotcha-English`。
+- 「Git 引用」填 `beta`。
+- 「稀疏路径」留空。
+
+点击「添加市场」，然后在插件列表找到 **GotchaEnglish Beta**，点击「安装」。
+
+安装或更新后，在 Codex 桌面端开启新对话，选择要用的版本。两版的 Skill 名称相同。如果同时启用时用错了版本，可以在插件设置中只启用当前要用的一版。
+
+<details>
+<summary>在终端安装或更新</summary>
+
+**正式版**
 
 ```sh
 codex plugin marketplace add tannnz/Gotcha-English --ref main
@@ -44,7 +65,7 @@ codex plugin add gotcha-english@gotcha-english-stable
 
 更新正式版时，运行 `codex plugin marketplace upgrade gotcha-english-stable`。
 
-### 测试版
+**测试版**
 
 ```sh
 codex plugin marketplace add tannnz/Gotcha-English --ref beta
@@ -53,9 +74,9 @@ codex plugin add gotcha-english-beta@gotcha-english-beta
 
 更新测试版时，运行 `codex plugin marketplace upgrade gotcha-english-beta`。
 
-### 在桌面端使用
+参见 [Codex 插件安装说明](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
 
-安装或更新后，在 Codex 桌面端开启新对话，选择需要的版本。如果命令行不支持 `codex plugin add`，可以先添加 GitHub 市场，再从桌面端的插件目录安装。两版内的 Skill 名称相同。若同时启用会调用错误版本，可以在插件设置中只启用当前要用的一版。参见 [Codex 插件安装说明](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
+</details>
 
 ## 在 Claude Code 安装插件
 
