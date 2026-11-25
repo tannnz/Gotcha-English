@@ -1,6 +1,6 @@
 # Gotcha English
 
-Gotcha English 是英语学习辅助插件，包含可独立使用的 Skills。目前提供日记批改、回声法练习、Notion 学习空间初始化和学习问题收录。
+Gotcha English 是英语学习辅助插件，包含可独立使用的 Skills。提供英语练习、日记批改、Notion 学习空间初始化和学习问题收录。
 
 ## 当前 Skill
 
@@ -14,6 +14,24 @@ Gotcha English 是英语学习辅助插件，包含可独立使用的 Skills。�
 Setup Learning Space 需要所在 Agent 已连接可读写页面和数据库的 Notion 工具。它建立学习数据空间，也可只为已有问题库添加缺少的字段：旧记录的新字段保持空白，不回填或改写原资料。Diary Coach 可直接处理当次日记，无需先建立学习空间。
 
 Collect Learning Issues 使用已有的 Notion 学习问题库。一条记录对应一个学习问题，不同对话的证据归入同一条。它与初始化 Skill 使用同一版本的字段和正文规范，写入前检查实际结构；不兼容的结构由维护操作处理。项目历史的可读范围取决于所在 Agent 的工具，记忆只用于定位原文；定时运行另行配置。Agent 根据当次环境选择检索和写入方式，无需本地脚本或中间 JSON。
+
+## Beta 独立练习
+
+在新对话中选择测试版 Skill，或输入对应的调用名。
+
+| Skill | 用途 | 调用名 |
+|---|---|---|
+| [句型替换](skills/substitution-drill/SKILL.md) | 用提示词替换句型中的内容 | `$substitution-drill` |
+| [句型转换](skills/transformation-drill/SKILL.md) | 按指定要求转换时态、语态或句式 | `$transformation-drill` |
+| [句子扩展](skills/sentence-expansion/SKILL.md) | 逐轮给简单句添加信息 | `$sentence-expansion` |
+| [语块提取](skills/chunk-retrieval/SKILL.md) | 根据含义和情境回忆英语搭配 | `$chunk-retrieval` |
+| [复述训练](skills/retelling/SKILL.md) | 用自己的语言复述主要信息 | `$retelling` |
+| [角色扮演](skills/role-play/SKILL.md) | 通过模拟对话完成沟通任务 | `$role-play` |
+| [信息差训练](skills/information-gap/SKILL.md) | 通过提问和确认获取信息 | `$information-gap` |
+| [引导式写作](skills/guided-writing/SKILL.md) | 根据写作提示完成初稿和修订 | `$guided-writing` |
+| [影子跟读](skills/shadowing/SKILL.md) | 跟随音频近同步模仿节奏和语调 | `$shadowing` |
+| [听后重构](skills/dictogloss/SKILL.md) | 听短文并根据记忆重构文本 | `$dictogloss` |
+| [限时重复表达](skills/4-3-2/SKILL.md) | 用 4、3、2 分钟依次表达同一主题 | `$4-3-2` |
 
 ## 独立安装 Skill
 
