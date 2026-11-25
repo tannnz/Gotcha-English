@@ -1,0 +1,131 @@
+name: Check and release GotchaEnglish
+
+on:
+  pull_request:
+    branches: [main, beta]
+  push:
+    branches: [main, beta]
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    if: github.ref_type != 'tag'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - name: Check the branch's plugin name
+        env:
+          TARGET_BRANCH: ${{ github.base_ref || github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          branch = os.environ["TARGET_BRANCH"]
+          expected = {"main": "gotcha-english", "beta": "gotcha-english-beta"}[branch]
+          plugin = json.loads(Path("plugin.json").read_text(encoding="utf-8"))
+          if plugin["name"] != expected:
+              raise SystemExit(f"{branch} requires the plugin name {expected}.")
+          PY
+      - run: python3 scripts/package-plugin.py --check
+      - run: python3 -m unittest discover -s tests
+
+  release:
+    if: github.event_name == 'push' && github.ref_type == 'tag' && github.event.created
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: release-${{ github.ref }}
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check the release tag
+        shell: bash
+        run: |
+          commit=$(git rev-parse HEAD)
+          git rev-list --first-parent refs/remotes/origin/main | grep -Fx "$commit" >/dev/null || {
+            echo 'The release tag must point to a commit on main.' >&2
+            exit 1
+          }
+
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          tag = os.environ["RELEASE_TAG"]
+          plugin = json.loads(Path("plugin.json").read_text(encoding="utf-8"))
+          if not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", tag):
+              raise SystemExit(f"Expected a stable release tag, got {tag}")
+          if plugin["name"] != "gotcha-english" or tag != f'v{plugin["version"]}':
+              raise SystemExit("The release tag must match the stable plugin manifest.")
+          PY
+
+      - run: python3 -m unittest discover -s tests
+      - run: python3 scripts/package-plugin.py
+
+      - name: Verify the ZIP
+        shell: bash
+        run: |
+          archive="dist/gotcha-english-${RELEASE_TAG#v}.zip"
+          python3 -m zipfile --test "$archive"
+          python3 - "$archive" <<'PY'
+          import sys
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          with ZipFile(sys.argv[1]) as package:
+              for manifest in ("plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json"):
+                  if package.read(f"gotcha-english/{manifest}") != Path(manifest).read_bytes():
+                      raise SystemExit(f"ZIP manifest differs from tagged source: {manifest}")
+          PY
+
+      - name: Upload the ZIP and publish the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          archive="dist/gotcha-english-${RELEASE_TAG#v}.zip"
+          filename=${archive##*/}
+          temporary=$(mktemp -d)
+          trap 'rm -rf "$temporary"' EXIT
+
+          fields=isDraft,isPrerelease,assets
+          if ! gh release view "$RELEASE_TAG" --json "$fields" > "$temporary/release.json"; then
+            gh release create "$RELEASE_TAG" --verify-tag --draft --notes-from-tag
+            gh release view "$RELEASE_TAG" --json "$fields" > "$temporary/release.json"
+          fi
+          if jq -e '.isPrerelease' "$temporary/release.json" >/dev/null; then
+            echo 'The existing release is marked as a prerelease.' >&2
+            exit 1
+          fi
+          if ! jq -e --arg name "$filename" '.assets | any(.name == $name)' "$temporary/release.json" >/dev/null; then
+            if ! jq -e '.isDraft' "$temporary/release.json" >/dev/null; then
+              echo 'The published release is missing its ZIP. Review it before retrying.' >&2
+              exit 1
+            fi
+            gh release upload "$RELEASE_TAG" "$archive"
+          fi
+
+          gh release download "$RELEASE_TAG" --pattern "$filename" --dir "$temporary"
+          if ! cmp -s "$archive" "$temporary/$filename"; then
+            echo 'The release ZIP differs from the build. Review it before retrying.' >&2
+            exit 1
+          fi
+          if jq -e '.isDraft' "$temporary/release.json" >/dev/null; then
+            gh release edit "$RELEASE_TAG" --draft=false
+          fi

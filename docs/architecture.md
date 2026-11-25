@@ -19,8 +19,8 @@
 | `.codex-plugin/`、`.claude-plugin/plugin.json` | 生成的平台插件说明 |
 | `.agents/plugins/marketplace.json`、`.claude-plugin/marketplace.json` | Codex 与 Claude Code 市场目录 |
 | `docs/` | 架构、开发和分发说明 |
-| `scripts/` | 元数据同步、检查和发布包生成 |
+| `scripts/` | 元数据同步、检查和生成发布 ZIP |
 | `tests/` | 工具检查 |
-| `dist/` | 生成的发布 ZIP，不作为源文件 |
+| `.github/workflows/release.yml` | GitHub 检查与正式版发布 |
 
-插件从同一 `skills/` 目录读取 Skills。新增 Skill 不需要复制插件内容；独立安装时可按名称选择 Skill。具体开发步骤见[开发流程](development.md)，发布步骤见[分发流程](distribution.md)。
+正式版和测试版分别读取 `main` 和 `beta` 的 `skills/`。独立安装时可按名称选择 Skill。修改和检查见[开发流程](development.md)，发布正式版见[发布流程](release.md)。

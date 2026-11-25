@@ -22,7 +22,7 @@ class PackagingTests(unittest.TestCase):
         self.manifest = {'name': 'gotcha-english', 'version': '0.1.1', 'description': 'Fictional test plugin', 'author': {'name': 'Test'}, 'license': 'MIT', 'extensions': {'com.openai': {'interface': {'displayName': 'Test'}}}}
         self.write('LICENSE', 'Fictional license for packaging tests.\n')
         self.save_manifest()
-        self.write('.agents/plugins/marketplace.json', json.dumps({'name': 'gotcha-english-local', 'plugins': [{'name': 'gotcha-english', 'source': {'source': 'local', 'path': './'}}]}))
+        self.write('.agents/plugins/marketplace.json', json.dumps({'name': 'gotcha-english-stable', 'plugins': [{'name': 'gotcha-english', 'source': {'source': 'local', 'path': './'}}]}))
         self.write('.claude-plugin/marketplace.json', json.dumps({'name': 'gotcha-english-local', 'plugins': [{'name': 'gotcha-english', 'source': './'}]}))
         self.skill('fictional-coach')
         packaging.sync_metadata(self.root)
@@ -114,9 +114,27 @@ class PackagingTests(unittest.TestCase):
             packaging.check(self.root)
 
     def test_market_source_must_be_root(self):
-        self.write('.agents/plugins/marketplace.json', json.dumps({'name': 'gotcha-english-local', 'plugins': [{'name': 'gotcha-english', 'source': {'source': 'local', 'path': './old'}}]}))
+        self.write('.agents/plugins/marketplace.json', json.dumps({'name': 'gotcha-english-stable', 'plugins': [{'name': 'gotcha-english', 'source': {'source': 'local', 'path': './old'}}]}))
         with self.assertRaisesRegex(packaging.ValidationError, 'repository root'):
             packaging.check(self.root)
+
+    def test_beta_catalog_cannot_use_the_stable_marketplace(self):
+        codex_path = '.agents/plugins/marketplace.json'
+        claude_path = '.claude-plugin/marketplace.json'
+        codex = packaging.read_json(self.root / codex_path)
+        claude = packaging.read_json(self.root / claude_path)
+        self.manifest['name'] = 'gotcha-english-beta'
+        self.save_manifest()
+        packaging.sync_metadata(self.root)
+        codex['plugins'][0]['name'] = 'gotcha-english-beta'
+        self.write(codex_path, json.dumps(codex))
+        with self.assertRaisesRegex(packaging.ValidationError, 'unexpected marketplace name'):
+            packaging.check(self.root)
+        codex['name'] = claude['name'] = 'gotcha-english-beta'
+        claude['plugins'][0]['name'] = 'gotcha-english-beta'
+        self.write(codex_path, json.dumps(codex))
+        self.write(claude_path, json.dumps(claude))
+        packaging.check(self.root)
 
     def test_assets_and_remote_references(self):
         self.manifest['extensions']['com.openai']['interface']['iconSmall'] = './assets/logo.svg'

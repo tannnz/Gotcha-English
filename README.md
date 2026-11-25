@@ -1,12 +1,13 @@
 # Gotcha English
 
-Gotcha English 是英语学习辅助插件，包含可独立使用的 Skills。目前提供日记批改、Notion 学习空间初始化和学习问题收录。
+Gotcha English 是英语学习辅助插件，包含可独立使用的 Skills。目前提供日记批改、回声法练习、Notion 学习空间初始化和学习问题收录。
 
 ## 当前 Skill
 
 | Skill | 用途 | 内容 |
 |---|---|---|
 | Diary Coach | 逐段批改英语日记，解释修改并保留原意与表达风格 | [目录](skills/diary-coach/) · [规则](skills/diary-coach/SKILL.md) |
+| Echo Method | 通过基础句型、替换练习、影子练习和情境应用训练英语表达 | [目录](skills/echo-method/) · [规则](skills/echo-method/SKILL.md) |
 | Setup Learning Space | 在 Notion 新建学习空间，或为已有问题库补充缺少的字段 | [目录](skills/setup-learning-space/) · [规则](skills/setup-learning-space/SKILL.md) |
 | Collect Learning Issues | 从指定项目、时间或对话范围收录英语学习问题，归并证据并避免重复计数 | [目录](skills/collect-learning-issues/) · [规则](skills/collect-learning-issues/SKILL.md) |
 
@@ -30,45 +31,50 @@ Use $collect-learning-issues to collect English-learning problems from this proj
 
 安装时需包含 Skill 目录中的模板和支持文件，不需要 ZIP。具体安装方式取决于所用 Agent 或安装器。
 
-## 安装插件
+## 在 Codex 安装和更新插件
 
-插件和独立 Skill 都使用仓库中的同一份 `skills/` 内容。以下两种插件安装方式都不需要 ZIP。
+两个版本都从 GitHub 安装。日常学习使用正式版（Stable），验证新功能使用测试版（Beta）。
 
-### 从 GitHub 安装
-
-未注册本地开发源的用户，可在 Codex 中注册此仓库提供的市场，再安装插件：
+### 正式版
 
 ```sh
-codex plugin marketplace add tannnz/Gotcha-English
-codex plugin add gotcha-english@gotcha-english-local
+codex plugin marketplace add tannnz/Gotcha-English --ref main
+codex plugin add gotcha-english@gotcha-english-stable
 ```
 
-市场名称 `gotcha-english-local` 来自仓库的市场目录文件；名称中的 `local` 不表示必须先手动下载仓库。CLI 不支持安装时，在桌面客户端的插件目录选择该市场并安装。GitHub 仓库安装是官方支持的市场来源，见[官方说明](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
+更新正式版时，运行 `codex plugin marketplace upgrade gotcha-english-stable`。
 
-### 本机开发安装
-
-开发时使用本地项目目录。在仓库根目录执行：
+### 测试版
 
 ```sh
-codex plugin marketplace add "$PWD"
-codex plugin add gotcha-english@gotcha-english-local
+codex plugin marketplace add tannnz/Gotcha-English --ref beta
+codex plugin add gotcha-english-beta@gotcha-english-beta
 ```
 
-已注册该本地市场时沿用现有配置，不要再添加同名 GitHub 来源。修改项目内容后，按[开发流程](docs/development.md#本地-codex-安装与更新)重启 ChatGPT，并在新聊天中验证。
+更新测试版时，运行 `codex plugin marketplace upgrade gotcha-english-beta`。
 
-Claude Code 使用仓库绝对路径：
+### 在桌面端使用
+
+安装或更新后，在 Codex 桌面端开启新对话，选择需要的版本。如果命令行不支持 `codex plugin add`，可以先添加 GitHub 市场，再从桌面端的插件目录安装。两版内的 Skill 名称相同。若同时启用会调用错误版本，可以在插件设置中只启用当前要用的一版。参见 [Codex 插件安装说明](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
+
+## 在 Claude Code 安装插件
+
+在 Claude Code 中运行以下命令，从 GitHub 安装正式版。
 
 ```text
-/plugin marketplace add /absolute/path/to/Gotcha-English
+/plugin marketplace add tannnz/Gotcha-English
 /plugin install gotcha-english@gotcha-english-local
 ```
 
+参见 [Claude Code 市场安装说明](https://code.claude.com/docs/en/plugins/create-marketplace#host-your-marketplace)。
+
 ## 文档
 
-- [架构](docs/architecture.md)：目录职责与源文件关系。
-- [开发流程](docs/development.md)：Skill 修改、检查和本地安装更新。
-- [分发流程](docs/distribution.md)：版本、GitHub 分发和按需生成 ZIP。
-- [开发规则](AGENTS.md)：仓库工作规则。
+- [架构](docs/architecture.md)列出目录职责与源文件关系。
+- [开发流程](docs/development.md)说明如何修改、检查和验证 Skill。
+- [分发流程](docs/distribution.md)说明 GitHub 安装和云端个人版的用途。
+- [发布流程](docs/release.md)说明正式版如何发布。
+- [开发规则](AGENTS.md)列出仓库工作规则。
 
 ## 许可
 
