@@ -1,6 +1,6 @@
 {
-  "name": "gotcha-english-local",
-  "interface": { "displayName": "Gotcha English" },
+  "name": "gotcha-english-stable",
+  "interface": { "displayName": "GotchaEnglish Stable" },
   "plugins": [
     {
       "name": "gotcha-english",

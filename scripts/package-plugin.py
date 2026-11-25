@@ -13,6 +13,10 @@ class ValidationError(ValueError):
 
 
 RECORD_FORMAT_FILES = ('record-format.md',)
+MARKETPLACE_NAMES = {
+    'gotcha-english': ('gotcha-english-stable', 'gotcha-english-local'),
+    'gotcha-english-beta': ('gotcha-english-beta', 'gotcha-english-beta'),
+}
 
 
 def shared_record_resources(root):
@@ -131,7 +135,10 @@ def local_target(root, origin, reference):
 
 def check_catalog(root, relative, name, codex):
     catalog = read_json(root / relative)
-    if catalog.get('name') != 'gotcha-english-local':
+    names = MARKETPLACE_NAMES.get(name)
+    if names is None:
+        raise ValidationError(f'plugin.json: unknown release channel for {name}')
+    if catalog.get('name') != names[0 if codex else 1]:
         raise ValidationError(f'{relative}: unexpected marketplace name')
     entries = catalog.get('plugins')
     if not isinstance(entries, list) or len(entries) != 1 or not isinstance(entries[0], dict):

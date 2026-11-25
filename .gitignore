@@ -5,6 +5,8 @@
 !/.agents/
 !/.claude-plugin/
 !/.codex-plugin/
+!/.github/
+!/.github/workflows/
 !/docs/
 !/scripts/
 !/skills/
@@ -27,6 +29,7 @@
 !/LICENSE
 !/plugin.json
 !/.codex-plugin/plugin.json
+!/.github/workflows/release.yml
 !/.claude-plugin/plugin.json
 !/.claude-plugin/marketplace.json
 !/.agents/plugins/marketplace.json

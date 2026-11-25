@@ -1,9 +1,19 @@
 # 分发流程
 
-本机开发、通过 GitHub 仓库市场安装插件、独立安装 Skill 均不需要 ZIP。安装方式见 [README](../README.md#安装插件)，本地验证见[开发流程](development.md#本地-codex-安装与更新)。各安装方式使用同一份 Skills 和插件元数据。
+## 从 GitHub 安装
 
-正式发布新版本时，按[发布流程](release.md)更新版本、推送代码和标签、创建 GitHub Release，并上传对应 ZIP。仅推送代码不等于发布新版本。
+| 用途 | 来源 | 如何更新 |
+| --- | --- | --- |
+| 在 Codex 日常学习 | `main` 上的正式版 | 刷新正式版市场 |
+| 在 Codex 验证新功能 | `beta` 上的测试版 | 刷新测试版市场 |
+| 单独安装某个 Skill | GitHub 仓库中的 Skill 目录 | 通过所用安装器更新 |
 
-需要单独导出 ZIP 时，完成项目检查后运行 `python3 scripts/package-plugin.py`。产物保存在忽略提交的 `dist/` 中，不改写插件内容。
+以上安装方式都直接读取仓库内容，无需 ZIP。具体命令见 [README](../README.md#在-codex-安装和更新插件)。
 
-GitHub 分发与官方插件目录提交分别处理。当前[官方提交流程](https://developers.openai.com/plugins/deploy/submission)要求上传 ZIP；GitHub 仓库或 Release 可访问，不代表已被官方目录收录。
+## 下载正式版 ZIP
+
+正式版的 ZIP 和版本说明保存在 GitHub Release。按[发布流程](release.md)推送正式版版本标签后，GitHub Actions 创建发布记录。Codex 安装仍从 GitHub 分支读取插件。
+
+## 云端个人版与官方插件目录
+
+现有云端个人版继续保留，适用范围见[决策记录](decisions.md)。发布 GitHub Release 后，官方插件目录仍需单独提交和审核。参见 [OpenAI 提交流程](https://developers.openai.com/plugins/deploy/submission)。
