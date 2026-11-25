@@ -17,21 +17,21 @@ Collect Learning Issues 使用已有的 Notion 学习问题库。一条记录对
 
 ## Beta 独立练习
 
-在新对话中选择测试版 Skill，或输入对应的调用名。
+在新对话中输入 `$`，搜索并选择对应的 GotchaEnglish Beta Skill。
 
 | Skill | 用途 | 调用名 |
 |---|---|---|
-| [句型替换](skills/substitution-drill/SKILL.md) | 用提示词替换句型中的内容 | `$substitution-drill` |
-| [句型转换](skills/transformation-drill/SKILL.md) | 按指定要求转换时态、语态或句式 | `$transformation-drill` |
-| [句子扩展](skills/sentence-expansion/SKILL.md) | 逐轮给简单句添加信息 | `$sentence-expansion` |
-| [语块提取](skills/chunk-retrieval/SKILL.md) | 根据含义和情境回忆英语搭配 | `$chunk-retrieval` |
-| [复述训练](skills/retelling/SKILL.md) | 用自己的语言复述主要信息 | `$retelling` |
-| [角色扮演](skills/role-play/SKILL.md) | 通过模拟对话完成沟通任务 | `$role-play` |
-| [信息差训练](skills/information-gap/SKILL.md) | 通过提问和确认获取信息 | `$information-gap` |
-| [引导式写作](skills/guided-writing/SKILL.md) | 根据写作提示完成初稿和修订 | `$guided-writing` |
-| [影子跟读](skills/shadowing/SKILL.md) | 跟随音频近同步模仿节奏和语调 | `$shadowing` |
-| [听后重构](skills/dictogloss/SKILL.md) | 听短文并根据记忆重构文本 | `$dictogloss` |
-| [限时重复表达](skills/4-3-2/SKILL.md) | 用 4、3、2 分钟依次表达同一主题 | `$4-3-2` |
+| [句型替换](skills/substitution-drill/SKILL.md) | 用提示词替换句型中的内容 | `$gotcha-english-beta:substitution-drill` |
+| [句型转换](skills/transformation-drill/SKILL.md) | 按指定要求转换时态、语态或句式 | `$gotcha-english-beta:transformation-drill` |
+| [句子扩展](skills/sentence-expansion/SKILL.md) | 逐轮给简单句添加信息 | `$gotcha-english-beta:sentence-expansion` |
+| [语块提取](skills/chunk-retrieval/SKILL.md) | 根据含义和情境回忆英语搭配 | `$gotcha-english-beta:chunk-retrieval` |
+| [复述训练](skills/retelling/SKILL.md) | 用自己的语言复述主要信息 | `$gotcha-english-beta:retelling` |
+| [角色扮演](skills/role-play/SKILL.md) | 通过模拟对话完成沟通任务 | `$gotcha-english-beta:role-play` |
+| [信息差训练](skills/information-gap/SKILL.md) | 通过提问和确认获取信息 | `$gotcha-english-beta:information-gap` |
+| [引导式写作](skills/guided-writing/SKILL.md) | 根据写作提示完成初稿和修订 | `$gotcha-english-beta:guided-writing` |
+| [影子跟读](skills/shadowing/SKILL.md) | 跟随音频近同步模仿节奏和语调 | `$gotcha-english-beta:shadowing` |
+| [听后重构](skills/dictogloss/SKILL.md) | 听短文并根据记忆重构文本 | `$gotcha-english-beta:dictogloss` |
+| [限时重复表达](skills/4-3-2/SKILL.md) | 用 4、3、2 分钟依次表达同一主题 | `$gotcha-english-beta:4-3-2` |
 
 ## 独立安装 Skill
 
