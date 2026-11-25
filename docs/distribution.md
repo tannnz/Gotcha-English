@@ -16,4 +16,6 @@
 
 ## 云端个人版与官方插件目录
 
-现有云端个人版继续保留，适用范围见[决策记录](decisions.md)。发布 GitHub Release 后，官方插件目录仍需单独提交和审核。参见 [OpenAI 提交流程](https://developers.openai.com/plugins/deploy/submission)。
+每次发布正式版时，通过 Plugin Creator 更新现有云端个人版。GitHub Release 提供发布包，个人版的更新和验证见[发布流程](release.md#更新并验证云端个人版)。个人版的适用范围见[决策记录](decisions.md)。
+
+官方插件目录仍需单独提交和审核。参见 [OpenAI 提交流程](https://developers.openai.com/plugins/deploy/submission)。

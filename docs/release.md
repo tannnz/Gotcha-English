@@ -1,12 +1,13 @@
 # 发布流程
 
-正式版从 `main` 安装。功能合入 `main` 后，用户刷新正式版市场即可收到改动。创建 GitHub Release 需要用户明确要求发布正式版。测试版随 `beta` 更新。
+正式版从 `main` 安装。功能合入 `main` 后，用户刷新正式版市场即可收到改动。用户明确要求发布正式版时，在同一次发布中创建 GitHub Release，并将同版本更新到现有云端个人插件。测试版随 `beta` 更新。
 
 ## 准备并验收正式版
 
-1. 汇总本次更新，确认根 `plugin.json` 的版本。修改版本号后，运行 `python3 scripts/package-plugin.py --sync-metadata`。
-2. 按[开发流程](development.md)运行检查和测试，在 Codex 桌面端验证受影响的 Skill。首次发布候选为当前 `main` 上的 `1.0.2`，还需通过[双版本安装验收](development.md#验收双版本安装)。
-3. 确认待发布提交已进入远程 `main`，并与已验收的提交一致。
+1. 通过 Plugin Creator 确认可更新现有云端个人插件，并查看当前版本。正式版版本号须高于云端当前版本。若两边已有同版本且 Skill、随附资源和实际配置一致，可直接记为已同步。若同版本内容不同，先确定更高的版本号。
+2. 汇总本次更新，确认根 `plugin.json` 的版本。修改版本号后，运行 `python3 scripts/package-plugin.py --sync-metadata`。
+3. 按[开发流程](development.md)运行检查和测试，在 Codex 桌面端验证受影响的 Skill。首次发布候选为当前 `main` 上的 `1.0.2`，还需通过[双版本安装验收](development.md#验收双版本安装)。
+4. 确认待发布提交已进入远程 `main`，并与已验收的提交一致。
 
 ## 推送标签并核对 GitHub Release
 
@@ -20,3 +21,11 @@ git push origin refs/tags/v1.0.2
 推送版本标签后，[发布工作流](../.github/workflows/release.yml)验证提交来自 `main`，检查标签与插件版本一致，再运行测试、生成并检查 ZIP。GitHub Actions 使用标签说明作为发布说明，核对上传的 ZIP 后发布 GitHub Release。
 
 发布后，核对 GitHub Release、标签和 ZIP 中的版本一致，并确认 ZIP 可下载。如果工作流失败，先查 Actions 日志。现有附件与本次产物不一致时，先核查差异再处理。历史发布及其附件继续保留。
+
+## 更新并验证云端个人版
+
+1. 从本次 GitHub Release 下载已核对的 ZIP，作为云端更新的来源。核对云端现有文件和当前发布记录，保留个人插件的名称、可见范围及账户设置。
+2. 通过 Plugin Creator 更新同一个个人插件。提交当前发布记录作为更新依据。需要删除旧文件时，列出准确的文件路径。上传包中省略的文件会保留。
+3. 读取更新后的云端版本和文件，核对版本号、Skill 和随附资源。在 ChatGPT 新对话中验证本次改动涉及的 Skill。两边均核对通过后，本次正式版发布才算完成。
+
+如果云端当前发布记录在上传前发生变化，重新读取并比较内容后再提交。若 GitHub Release 已发布但云端更新失败，记录两边的状态，从云端更新步骤继续处理。
