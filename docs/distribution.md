@@ -14,8 +14,8 @@
 
 正式版的 ZIP 和版本说明保存在 GitHub Release。按[发布流程](release.md)推送正式版版本标签后，GitHub Actions 创建发布记录。Codex 安装仍从 GitHub 分支读取插件。
 
-## 云端个人版与官方插件目录
+## ChatGPT 个人插件与官方插件目录
 
-每次发布正式版时，通过 Plugin Creator 更新现有云端个人版。GitHub Release 提供发布包，个人版的更新和验证见[发布流程](release.md#更新并验证云端个人版)。个人版的适用范围见[决策记录](decisions.md)。
+ChatGPT 个人插件跟随 Beta。更新和验证见[发布流程](release.md#更新并验证-chatgpt-个人插件)。适用范围见[决策记录](decisions.md)。
 
 官方插件目录仍需单独提交和审核。参见 [OpenAI 提交流程](https://developers.openai.com/plugins/deploy/submission)。
